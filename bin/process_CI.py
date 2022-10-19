@@ -44,7 +44,8 @@ def main():
     # clean up barcode column
   
     if args.libraryType in ['10X',"SLS"]:
-      df["barcode"] = df["barcode"].str.rstrip("-1")
+#       df["barcode"] = df["barcode"].str.rstrip("-1")
+      df["barcode"] = df["barcode"]
       df["cell_id"] = sample_ID + "_" + df["barcode"].astype(str)
     elif args.libraryType == 'SS2':
       df['id'] = df['id'].str.split('.').str[0]
