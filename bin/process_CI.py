@@ -32,7 +32,7 @@ def main():
     # remove UMI duplicates by cell + junction
     df = df.drop_duplicates(["barcode","UMI","refName_ABR1"])
   
-    df["barcode_refName"] = df["barcode"].astype(str) + df["refName_ABR1"]
+    df["barcode_refName"] = sample_ID + df["refName_ABR1"]
   
     # count number of lines corresponding to the junction in the cell
     barcode_name_vc = df["barcode_refName"].value_counts()
@@ -47,6 +47,9 @@ def main():
 #       df["barcode"] = df["barcode"].str.rstrip("-1")
       df["barcode"] = df["barcode"]
       df["cell_id"] = sample_ID + "_" + df["barcode"].astype(str)
+    elif args.libraryType == 'ST':
+      df["barcode"] = sample_ID
+      df["cell_id"] = df["id"].astype(str)
     elif args.libraryType == 'SS2':
       df['id'] = df['id'].str.split('.').str[0]
       df["cell_id"] = df["id"].astype(str)
