@@ -59,10 +59,10 @@ def main():
   full_df.rename(columns={"geneR1A" : "geneR1A_uniq", "geneR1B" : "geneR1B_uniq"}, inplace=True)
   
   final_df = full_df[["refName_newR1","geneR1A_uniq","geneR1B_uniq", "juncPosR1A","juncPosR1B","chrR1A","chrR1B","numReads","cell_id"]]
-
+  final_df.to_csv("final_df.csv", sep="\t", index=False) 
   meta = pd.read_csv(args.meta, sep="\t") 
   final_df.drop([x for x in final_df.columns if x in meta.columns and x != "cell_id"], inplace=True, axis=1)
-
+  final_df.to_csv("final_df_drop.csv", sep="\t", index=False)
   merged = final_df.merge(meta, left_on="cell_id", right_on="cell_id", how = "left")
 
   merged.rename(columns={'cell_id': 'cell'}, inplace=True)
